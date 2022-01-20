@@ -65,8 +65,7 @@ export async function addWarehouse(address, setNotification) {
   const data = {
     address: address,
   };
-
-  const res = await perform("set", "/addwarehouse", data);
+  const res = await perform("post", "/addwarehouse", data);
   if (res.status !== 200 && res.status !== 201) {
     setNotification({
       type: "error",
@@ -107,8 +106,8 @@ export async function getItem(itemID, setNotification) {
   const data = {
     itemID: itemID,
   };
-  console.log(itemID)
-  const res = await perform("get", "/getitem", data);
+  const res = await perform("get", `/getitem?id=${itemID}`, data);
+  const item = await res.json()
   if (res.status !== 200 && res.status !== 201) {
     setNotification({ type: "error", message: "Error retrieving item data" });
   } else {
@@ -117,6 +116,7 @@ export async function getItem(itemID, setNotification) {
       message: "Successfully retrieved item data",
     });
   }
+  return item
 }
 
 export async function getItemBatch(itemBatchID, setNotification) {
@@ -136,4 +136,42 @@ export async function getItemBatch(itemBatchID, setNotification) {
       message: "Successfully retrieved item batch data",
     });
   }
+}
+
+export async function getItems(setNotification) {
+  const res = await perform("get", "/getitems");
+  const items = await res.json();
+  if (res.status !== 200 && res.status !== 201) {
+    setNotification({
+      type: "error",
+      message: "Error getting items",
+    });
+  } else {
+    setNotification({
+      type: "success",
+      message: "Successfully retrieved items!",
+    });
+    return items
+  }
+}
+
+
+
+export async function getWarehouses(setNotification) {
+  const res = await perform("get", "/getwarehouses");
+  const warehouses = await res.json();
+  if (res.status !== 200 && res.status !== 201) {
+    setNotification({
+      type: "error",
+      message: "Error getting warehouses",
+    });
+  } else {
+    setNotification({
+      type: "success",
+      message: "Successfully retrieved warehouses!",
+    });
+  }
+
+  return warehouses
+
 }

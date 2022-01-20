@@ -35,10 +35,12 @@ function insertItemBatch() {
         // If no item exists in database, create a new one
         item = new Item(itemName, newQuantity);
         item.warehouseIDs.add(warehouseID);
+      
       } else {
         item.quantity += newQuantity;
         item.warehouseIDs.add(warehouseID);
       }
+      
       itemByID[item.id] = item;
 
       // Update itemBatchByID
@@ -48,8 +50,9 @@ function insertItemBatch() {
         newQuantity,
         warehouseID
       );
-      itemBatchByID[itemBatchObj.batchId] = itemBatchObj;
 
+      itemBatchByID[itemBatchObj.batchId] = itemBatchObj;
+      
       // Update warehouse inventory
       const warehouse = warehouseByID[itemBatchObj.warehouseID];
       if (!warehouse) {
@@ -63,7 +66,7 @@ function insertItemBatch() {
       }
 
       warehouseByID[itemBatchObj.warehouseID] = warehouse;
-      console.log(item.id)
+      console.log(item)
 
       res.status(200).send("ItemBatch added successfully");
     } catch (error) {
@@ -80,9 +83,8 @@ function addWarehouse() {
   return async (req, res) => {
     try {
       var { address } = req.body;
-
       Object.keys(warehouseByID).forEach(function (key) {
-        if (warehouseByID[key].address === addresss) {
+        if (warehouseByID[key].address === address) {
           throw new Error("Warehouse already exists");
         }
       });
@@ -101,6 +103,7 @@ function addWarehouse() {
     }
   };
 }
+
 
 function updateItemQuantityInAWarehouse() {
   return async (req, res) => {
@@ -132,9 +135,7 @@ function updateItemQuantityInAWarehouse() {
 function getItem() {
   return async (req, res) => {
     try {
-      var { itemID } = req.body;
-      console.log(itemID)
-      console.log(itemByID)      
+      var itemID = req.query.id;
       const item = itemByID[itemID];
       if (!item) {
         throw new Error("Item not found");
@@ -149,9 +150,47 @@ function getItem() {
     }
   };
 }
+
+
+function getItems() {
+  return async (req, res) => {
+    try {
+      let items = {};
+      // get entries from warehouseByID
+      Object.entries(itemByID).forEach(([key, item]) => {
+        items[item.name] = key;
+      });
+      res.json(items);
+    } catch (error) {
+      console.log(`getItems: ${error}`);
+      // return response message, warehouse not found
+      res.status(400).json({
+        message: error.message,
+      });
+    }
+  };
+}
+
+function getWarehouses() {
+  return async (req, res) => {
+    try {
+      console.log(warehouseByID)
+      res.json(warehouseByID);
+    } catch (error) {
+      console.log(`getItems: ${error}`);
+      // return response message, warehouse not found
+      res.status(400).json({
+        message: error.message,
+      });
+    }
+  };
+}
+
 module.exports = {
   insertItemBatch,
   getItem,
   addWarehouse,
   updateItemQuantityInAWarehouse,
+  getItems, 
+  getWarehouses
 };

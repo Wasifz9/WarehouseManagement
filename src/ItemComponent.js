@@ -20,14 +20,14 @@ export default function ItemComponent(props){
   return ( 
     <div className="item-component">
       <div>
-        <Typography m={10} variant={'h3'}>
+        <Typography m={10} variant={'h7'}>
           {name}
         </Typography>
       </div>
-      <Typography m={10} variant={'h3'}>
+      <Typography m={10} variant={'h7'}>
         {quantity}
       </Typography>
-      <Typography m={10} variant={'h3'}>
+      <Typography m={10} variant={'h7'}>
         {itemId}
       </Typography>
     </div>

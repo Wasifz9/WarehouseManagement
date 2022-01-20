@@ -8,6 +8,8 @@ const {
   getItem,
   addWarehouse,
   updateItemQuantityInAWarehouse,
+  getItems, 
+  getWarehouses
 } = require("./inventoryControllers");
 
 const app = express();
@@ -59,13 +61,17 @@ app.use(
   })
 );
 
-app.post("/addWarehouse", addWarehouse());
+app.post("/addwarehouse", addWarehouse());
 
 app.post("/updatewarehouse", updateItemQuantityInAWarehouse());
 
 app.post("/additembatch", insertItemBatch());
 
 app.get("/getitem", getItem());
+
+app.get("/getitems", getItems());
+
+app.get("/getwarehouses", getWarehouses());
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

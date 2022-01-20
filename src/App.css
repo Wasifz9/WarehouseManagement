@@ -69,8 +69,20 @@
   align-items: center;
   justify-content: center;
   margin: 5%;
-  flex: 1.5;
+  flex: 1.5; 
+  overflow-y: scroll;
+}
 
+.item-results{ 
+  flex:2;
+  padding: 2%;
+}
+.item-preview{
+  flex: 1;
+  display:flex; 
+  justify-content: center;
+  align-items: center;
+  border: 1px grey solid; 
 }
 
 .warehouse-control {
@@ -86,6 +98,7 @@
   border-radius: 10;
   border: 1px grey solid;
   width: 90%;
+  overflow-y: scroll;
 }
 
 .item-viewer-container { 
