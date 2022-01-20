@@ -47,3 +47,11 @@ export function insertItemBatch(
 	  console.log("Error inserting item batch", e);
 	}
       }
+
+  export function addWarehouse(){ 
+
+  }
+
+  export function updateWarehouseItemQuantiy(){ 
+    
+  }

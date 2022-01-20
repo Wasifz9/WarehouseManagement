@@ -6,6 +6,9 @@ import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import NewItemBatchForm from "./components/BatchForm";
 import { addItemBatch, addWarehouse, updateWarehouseItemQuantiy } from './apiCaller'
+import Dashboard from "./Dashboard";
+
+
 function syntaxHighlight(json) {
   if (typeof json != "string") {
     json = JSON.stringify(json, undefined, 2);
@@ -103,15 +106,17 @@ function App() {
     document.getElementById(2).innerHTML = syntaxHighlight(itemById);
     document.getElementById(3).innerHTML = syntaxHighlight(itemBatchById);
     console.log(itemById);
-    const as = addItemBatch(7, 'as', 9)
-    console.log(as)
-    
+
+    // console.log(as)
+
   }, [warehousesById, itemById, itemBatchById]);
 
   return (
     <div className="App">
-      {newBatchForm && <NewItemBatchForm setNewBatchForm={setNewBatchForm} />}
-
+      {/* {newBatchForm && <NewItemBatchForm setNewBatchForm={setNewBatchForm} />} */}
+      
+      <Dashboard /> 
+{/* 
       <div>
         <form>
           <TextField
@@ -162,7 +167,7 @@ function App() {
             Register item batch
           </Button>
         </form>
-      </div>
+      </div> */}
 
       <div>
         <pre id="1" />
